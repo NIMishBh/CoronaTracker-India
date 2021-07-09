@@ -1,0 +1,46 @@
+import React from 'react';
+import BarGraph from '../BarGraph';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import StateList from '../StateList';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+  paper: {
+    backgroundColor: '#282828',
+    padding: theme.spacing(2)
+  }
+}));
+
+const barProperties02 = { xAxis: 'name', barDataName: 'Cases', color: '#0033cc', height: 500 };
+
+function StateWiseCases(props) {
+  const classes = useStyles();
+  const { graphData, states } = props;
+  const [curState, setCurState] = React.useState('Total');
+
+  const handleListSelect = (val) => {
+    setCurState(val);
+  }
+  return (
+    <div className={classes.root}>
+      <Typography variant='h4' align="center" style={{ color: '#fff' }} gutterBottom>State Wise Cases</Typography>
+      <Paper className={classes.paper}>
+        <Grid container spacing={6}>
+          <Grid item xs={12} md={8}>
+            <BarGraph data={graphData[curState]} name={barProperties02} />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <StateList data={states} handleListSelect={handleListSelect}/>
+          </Grid>
+        </Grid>
+      </Paper>
+    </div>
+  )
+}
+
+export default StateWiseCases
