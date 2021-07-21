@@ -21,20 +21,25 @@ function Dashboard() {
 
   React.useEffect(() => {
     const statewiseData = {};
+    let states = [];
     if (data) {
 
-      let stateNames = data.statewise.map(item=>({
-        name: item.state
-      }));
-      setStates(stateNames);
-
       data.statewise.map(item => {
-        statewiseData[item.state] = [
-          {name: 'active', Cases: item.active},
-          {name: 'confirmed', Cases: item.confirmed},
-          {name: 'deaths', Cases: item.deaths}
-        ]
-      })
+        if(item.statecode != 'UN')
+        {
+          states = [...states, item.state]
+        }
+      });
+
+      setStates(states);
+
+        data.statewise.map(item => {
+          statewiseData[item.state] = {
+            active: item.active,
+            confirmed: item.confirmed,
+            deaths: item.deaths
+          }
+        })
       setBarGraphData(statewiseData);
     }
   }, [data])
@@ -56,7 +61,7 @@ function Dashboard() {
             <SingleValueMetric style={{ color: '#e04419' }} title="Total Deaths" value={data?.statewise[0]?.deaths ?? 0} />
           </Grid>
         </Grid>
-        <StateWiseCases graphData={barGraphData} states={states}/>
+        <StateWiseCases graphData={barGraphData} states={states} />
       </FadeIn>
     </>
   )

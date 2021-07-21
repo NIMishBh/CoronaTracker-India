@@ -7,7 +7,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     border: '1px solid #fff',
     borderRadius: 6,
     color:'#fff',
@@ -25,8 +24,8 @@ function StateList(props) {
         {
           data.map((item,i) => {
             return (
-              <ListItem button key={i} onClick = {() => handleListSelect(item.name)}>
-                <ListItemText primary={item.name} />
+              <ListItem button key={i} onClick = {() => handleListSelect(item)}>
+                <ListItemText primary={item} />
               </ListItem>
             )
           })

@@ -26,6 +26,7 @@ function StateWiseCases(props) {
   const handleListSelect = (val) => {
     setCurState(val);
   }
+
   return (
     <div className={classes.root}>
       <Typography variant='h4' align="center" style={{ color: '#fff' }} gutterBottom>State Wise Cases</Typography>
@@ -33,8 +34,11 @@ function StateWiseCases(props) {
         <Grid container spacing={6}>
           <Grid item xs={12} md={8}>
             <BarGraph data={graphData[curState]} name={barProperties02} />
+            <Typography align='center' variant='h5' style={{ color: '#fff', padding:20 }}>{curState}</Typography>
+            <Typography align='center' variant='h5' style={{ color: '#ff7e0d'}}>{`Confirmed Cases: ${graphData[curState]?.confirmed.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography align='center' variant='h5' style={{ color: '#fff' }} gutterBottom>States</Typography>
             <StateList data={states} handleListSelect={handleListSelect}/>
           </Grid>
         </Grid>

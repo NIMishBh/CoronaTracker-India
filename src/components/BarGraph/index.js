@@ -1,26 +1,38 @@
 import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { Bar } from 'react-chartjs-2';
 
 function BarGraph(props) {
-  const { data, name } = props;
+  const { data: mainData, name } = props;
+  const barData = {
+    labels: ['Active', 'Deaths'],
+    datasets: [
+      {
+        label: 'Number Of Cases',
+        data: [mainData?.active, mainData?.deaths],
+        backgroundColor: ['#00cc00', '#ff0000'],
+        borderWidth: 1,
+      }
+    ]
+  }
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: false,
+          },
+        },
+      ],
+    },
+    plugins: {
+      tooltip: {
+        mode: 'nearest',
+        intersect: false
+      }
+    }
+  };
   return (
-    <ResponsiveContainer width={'100%'} height={name.height}>
-      <BarChart
-        data={data}
-        margin={{
-          top: 5,
-          right: 30,
-          left: 0,
-          bottom: 5
-        }}
-      >
-        <XAxis dataKey={name.xAxis} />
-        <YAxis  type="number"/>
-        <Tooltip />
-        <Legend />
-        <Bar dataKey={name.barDataName} fill={name.color} />
-      </BarChart>
-    </ResponsiveContainer>
+    <Bar data={barData} options={options} />
   );
 }
 
